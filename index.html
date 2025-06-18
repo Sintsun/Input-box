@@ -45,13 +45,14 @@
           body: formData
         });
 
-        if (response.ok) {
-          status.textContent = '貼文已成功發送到社交媒體！';
+        const result = await response.json();
+        if (response.ok && result.status === 'success') {
+          status.textContent = '發送貼文成功！';
         } else {
-          status.textContent = '發送貼文失敗，請重試。';
+          status.textContent = result.message || '發送貼文失敗，請重試。';
         }
       } catch (error) {
-        status.textContent = '錯誤：' + error.message;
+        status.textContent = '錯誤：' + (error.message || '請檢查網絡連接並重試。');
       }
     });
   </script>
